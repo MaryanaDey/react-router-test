@@ -1,23 +1,40 @@
-import logo from './logo.svg';
 import './App.css';
+
+import React from 'react';
+import { Suspense } from 'react';
+
+import HomePages from "./pages/HomePage/HomePage";
+import { Routes, Route } from 'react-router-dom';
+
+import PrivateRouter from './utils/router/privateRouter';
+
+
+
+import LoginPages from './pages/LoginPage/LoginPage';
+import RegisterPages from './pages/RegisterPage/RegisterPages';
+
+import Header from './components/Header/Header'
+import Navigation from './components/Navigation/Navigation';
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header>
+        <Navigation />
+      </Header>
+      <Suspense fallback={<h2>Loading...</h2>}>
+        <Routes>
+
+          <Route element={<PrivateRouter />} >
+            {/* <Route path="/" element={<Home />} /> */}
+            <Route path="/" element={<HomePages />} />
+          </Route>
+
+          <Route path="login" element={<LoginPages />} />
+          <Route path="register" element={<RegisterPages />} />
+        </Routes>
+      </Suspense>
     </div>
   );
 }
